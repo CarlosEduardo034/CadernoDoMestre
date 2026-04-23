@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Login</h2>
+    <form id="formLogin">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+    <a href="cadastro.html">Cadastro</a>
+
+    <script>
+        document.getElementById("formLogin").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+
+            fetch("login.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `email=${email}&senha=${senha}`
+            })
+                .then(res => res.text())
+                .then(data => {
+                    if (data === "ok") {
+                        window.location.href = "Dashboard/Dashboard.php";
+                    } else {
+                        alert("Erro: " + data);
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

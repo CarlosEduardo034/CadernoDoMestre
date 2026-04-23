@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Cadastro</h2>
+    <form id="formCadastro" method="POST">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <input type="password" id="confirmarSenha" placeholder="Confirmar senha" required>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+    <a href="login.html">Login</a>
+
+    <script>
+        document.getElementById("formCadastro").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+            const confirmar = document.getElementById("confirmarSenha").value;
+
+            if (senha !== confirmar) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            if (senha.length < 6) {
+                alert("A senha deve ter pelo menos 6 caracteres");
+                return;
+            }
+
+            fetch("cadastro.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`
+            })
+                .then(res => res.text())
+                .then(data => {
+                    if (data === "ok") {
+                        alert("Cadastro realizado com sucesso!");
+                        window.location.href = "Dashboard/Dashboard.php";
+                    } else {
+                        alert("Erro: " + data);
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>
