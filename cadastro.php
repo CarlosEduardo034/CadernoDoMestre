@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("config.php");
+include("Config/Config.php");
 
 $email = $_POST['email'] ?? null;
 $senha = $_POST['senha'] ?? null;
