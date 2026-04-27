@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("config/database.php");
+include("../config/database.php");
 
 if (!isset($_SESSION['id'])) {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit;
 }
 
@@ -41,7 +41,7 @@ if (!$capitulo) {
 
 
 <a href="lixeira.php">Lixeira</a>
-<a href="Dashboard/Dashboard.php">Voltar ao Dashboard</a>
+<a href="../Dashboard/Dashboard.php">Voltar ao Dashboard</a>
 
 <script>
     const capituloId = <?= $capitulo['id'] ?>;
@@ -49,7 +49,7 @@ if (!$capitulo) {
     function criarPagina() {
         const titulo = document.getElementById("tituloPagina").value;
 
-        fetch("api/paginas/criar.php", {
+        fetch("../api/paginas/criar.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -67,7 +67,7 @@ if (!$capitulo) {
     }
 
     function carregarPaginas() {
-        fetch("api/paginas/listar.php?capitulo_id=" + capituloId)
+        fetch("../api/paginas/listar.php?capitulo_id=" + capituloId)
         .then(res => res.json())
         .then(paginas => {
             const container = document.getElementById("listaPaginas");
@@ -124,7 +124,7 @@ if (!$capitulo) {
     function salvarPagina(id) {
         const titulo = document.getElementById(`titulo-p-${id}`).value;
 
-        fetch("api/paginas/editar.php", {
+        fetch("../api/paginas/editar.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -144,7 +144,7 @@ if (!$capitulo) {
     function excluirPagina(id) {
         if (!confirm("Mover página para lixeira?")) return;
 
-        fetch("api/paginas/excluir.php", {
+        fetch("../api/paginas/excluir.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -177,7 +177,7 @@ if (!$capitulo) {
 
                 console.log("Enviando:", id, conteudo);
 
-                fetch("api/paginas/salvar_conteudo.php", {
+                fetch("../api/paginas/salvar_conteudo.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -192,7 +192,7 @@ if (!$capitulo) {
                         status.innerText = "Erro ao salvar";
                     }
                 });
-            }, 800); // tempo de espera (ms)
+            }, 800);
         });
     }
 </script>
