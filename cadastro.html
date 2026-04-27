@@ -16,9 +16,12 @@
 
         <button type="submit">Cadastrar</button>
     </form>
-    <a href="login.html">Login</a>
+    <a href="/CadernoDoMestre00/login.html">Login</a>
 
     <script>
+        const BASE_URL = window.location.pathname.includes("CadernoDoMestre00")
+        ? "/CadernoDoMestre00"
+        : "";
         document.getElementById("formCadastro").addEventListener("submit", function (e) {
             e.preventDefault();
 
@@ -36,7 +39,7 @@
                 return;
             }
 
-            fetch("api/auth/cadastro.php", {
+            fetch(`${BASE_URL}/api/auth/cadastro.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -47,7 +50,7 @@
                 .then(data => {
                     if (data === "ok") {
                         alert("Cadastro realizado com sucesso!");
-                        window.location.href = "Dashboard/Dashboard.php";
+                        window.location.href = `${BASE_URL}/Dashboard/Dashboard.php`;
                     } else {
                         alert("Erro: " + data);
                     }

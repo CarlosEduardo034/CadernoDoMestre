@@ -11,7 +11,6 @@ if (!$titulo || !$capitulo_id) {
     exit;
 }
 
-// valida capítulo do usuário
 $sql = "SELECT id FROM capitulos WHERE id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $capitulo_id, $usuario_id);
@@ -22,7 +21,6 @@ if ($stmt->get_result()->num_rows == 0) {
     exit;
 }
 
-// inserir
 $sql = "INSERT INTO paginas (capitulo_id, usuario_id, titulo) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("iis", $capitulo_id, $usuario_id, $titulo);

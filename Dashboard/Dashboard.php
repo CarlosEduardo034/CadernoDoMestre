@@ -26,14 +26,18 @@ if (!isset($_SESSION['id'])) {
             <ul id="listaCapitulos"></ul>
 
             <button onclick="listarLixeira()">Ver Lixeira</button>
+            <button onclick="logout()">Sair</button>
         </main>
 
     <script>
+        const BASE_URL = window.location.pathname.includes("CadernoDoMestre00")
+        ? "/CadernoDoMestre00"
+        : "";
         function criarCapitulo() {
             const nome = document.getElementById("nome").value;
             const descricao = document.getElementById("descricao").value;
 
-            fetch("../api/capitulos/criar.php", {
+            fetch(`${BASE_URL}/api/capitulos/criar.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -51,7 +55,7 @@ if (!isset($_SESSION['id'])) {
         }
 
         function carregarCapitulos() {
-            fetch("../api/capitulos/listar.php")
+            fetch(`${BASE_URL}/api/capitulos/listar.php`)
             .then(res => res.json())
             .then(capitulos => {
                 const lista = document.getElementById("listaCapitulos");
@@ -59,10 +63,10 @@ if (!isset($_SESSION['id'])) {
 
                 capitulos.forEach(c => {
                     const li = document.createElement("li");
-
+                    console.log("ID do capítulo:", c.id);
                     li.innerHTML = `
                         <div id="view-${c.id}">
-                            <a href="../views/capitulo.php?id=${c.id}">
+                            <a href="${BASE_URL}/views/capitulo.php?id=${c.id}">
                                 <strong>${c.nome}</strong>
                             </a>
                             - ${c.descricao || ""}
@@ -98,7 +102,7 @@ if (!isset($_SESSION['id'])) {
             const nome = document.getElementById(`nome-${id}`).value;
             const descricao = document.getElementById(`desc-${id}`).value;
  
-            fetch("../api/capitulos/editar.php", {
+            fetch(`${BASE_URL}/api/capitulos/editar.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -108,7 +112,7 @@ if (!isset($_SESSION['id'])) {
             .then(res => res.text())
             .then(data => {
                 if (data === "ok") {
-                    carregarCapitulos(); // recarrega lista
+                    carregarCapitulos(); 
                 } else {
                     alert("Erro: " + data);
                 }
@@ -120,7 +124,7 @@ if (!isset($_SESSION['id'])) {
 
             if (!confirmar) return;
 
-            fetch("../api/capitulos/excluir.php", {
+            fetch(`${BASE_URL}/api/capitulos/excluir.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -138,7 +142,15 @@ if (!isset($_SESSION['id'])) {
         }
 
         function listarLixeira() {
-            window.location.href = "../views/lixeira.php";
+            window.location.href = `${BASE_URL}/views/lixeira.php`;
+        }
+
+        function logout() {
+            fetch(`${BASE_URL}/api/auth/logout.php`)
+            .then(res => res.text())
+            .then(() => {
+                window.location.href = `${BASE_URL}/login.html`;
+            });
         }
     </script>
 </body>

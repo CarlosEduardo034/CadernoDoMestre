@@ -40,16 +40,19 @@ if (!$capitulo) {
 <div id="listaPaginas"></div>
 
 
-<a href="lixeira.php">Lixeira</a>
-<a href="../Dashboard/Dashboard.php">Voltar ao Dashboard</a>
+<a href="/CadernoDoMestre00/views/lixeira.php">Lixeira</a>
+<a href="/CadernoDoMestre00/Dashboard/Dashboard.php">Voltar ao Dashboard</a>
 
 <script>
+    const BASE_URL = window.location.pathname.includes("CadernoDoMestre00")
+    ? "/CadernoDoMestre00"
+    : "";
     const capituloId = <?= $capitulo['id'] ?>;
 
     function criarPagina() {
         const titulo = document.getElementById("tituloPagina").value;
 
-        fetch("../api/paginas/criar.php", {
+        fetch(`${BASE_URL}/api/paginas/criar.php`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -67,7 +70,7 @@ if (!$capitulo) {
     }
 
     function carregarPaginas() {
-        fetch("../api/paginas/listar.php?capitulo_id=" + capituloId)
+        fetch(`${BASE_URL}/api/paginas/listar.php?capitulo_id=${capituloId}`)
         .then(res => res.json())
         .then(paginas => {
             const container = document.getElementById("listaPaginas");
@@ -124,7 +127,7 @@ if (!$capitulo) {
     function salvarPagina(id) {
         const titulo = document.getElementById(`titulo-p-${id}`).value;
 
-        fetch("../api/paginas/editar.php", {
+        fetch(`${BASE_URL}/api/paginas/editar.php`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -144,7 +147,7 @@ if (!$capitulo) {
     function excluirPagina(id) {
         if (!confirm("Mover página para lixeira?")) return;
 
-        fetch("../api/paginas/excluir.php", {
+        fetch(`${BASE_URL}/api/paginas/excluir.php`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -177,7 +180,7 @@ if (!$capitulo) {
 
                 console.log("Enviando:", id, conteudo);
 
-                fetch("../api/paginas/salvar_conteudo.php", {
+                fetch(`${BASE_URL}/api/paginas/salvar_conteudo.php`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"

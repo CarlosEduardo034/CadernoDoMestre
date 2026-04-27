@@ -10,7 +10,6 @@ if (!$id) {
     exit;
 }
 
-// valida dono
 $sql = "SELECT id FROM paginas WHERE id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $id, $usuario_id);
@@ -21,7 +20,6 @@ if ($stmt->get_result()->num_rows == 0) {
     exit;
 }
 
-// mover pra lixeira
 $sql = "UPDATE paginas SET is_lixeira = 1 WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);

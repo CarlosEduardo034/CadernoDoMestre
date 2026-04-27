@@ -10,7 +10,6 @@ if (!$id) {
     exit;
 }
 
-// buscar capítulo
 $sql = "SELECT p.capitulo_id, c.is_lixeira 
         FROM paginas p
         JOIN capitulos c ON p.capitulo_id = c.id
@@ -33,7 +32,6 @@ if ($dado['is_lixeira'] == 1) {
     exit;
 }
 
-// restaurar
 $sql = "UPDATE paginas SET is_lixeira = 0 WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
