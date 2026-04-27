@@ -62,7 +62,7 @@ if (!isset($_SESSION['id'])) {
 
                     li.innerHTML = `
                         <div id="view-${c.id}">
-                            <a href="../pages/capitulo.php?id=${c.id}">
+                            <a href="../views/capitulo.php?id=${c.id}">
                                 <strong>${c.nome}</strong>
                             </a>
                             - ${c.descricao || ""}
@@ -138,7 +138,7 @@ if (!isset($_SESSION['id'])) {
         }
 
         function listarLixeira() {
-            window.location.href = "../pages/lixeira.php";
+            window.location.href = "../views/lixeira.php";
         }
     </script>
 </body>

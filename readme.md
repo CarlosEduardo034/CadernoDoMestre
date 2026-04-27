@@ -2,4 +2,3 @@ Uma aplicação de anotações e planejamento para mestres de RPG. Ainda em dese
 
 https://caderno-do-mestre.infinityfreeapp.com/capitulo.php?id=1
 
-Próximo passo: formatar a estrutura do projeto...
