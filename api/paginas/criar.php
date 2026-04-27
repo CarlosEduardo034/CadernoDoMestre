@@ -1,11 +1,6 @@
 <?php
-session_start();
-include("Config/Config.php");
-
-if (!isset($_SESSION['id'])) {
-    echo "nao_autorizado";
-    exit;
-}
+require_once("../../config/database.php");
+require_once("../../middlewares/auth.php");
 
 $titulo = $_POST['titulo'] ?? null;
 $capitulo_id = $_POST['capitulo_id'] ?? null;
@@ -16,24 +11,20 @@ if (!$titulo || !$capitulo_id) {
     exit;
 }
 
+// valida capítulo do usuário
 $sql = "SELECT id FROM capitulos WHERE id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $capitulo_id, $usuario_id);
 $stmt->execute();
-$result = $stmt->get_result();
 
-if ($result->num_rows == 0) {
+if ($stmt->get_result()->num_rows == 0) {
     echo "capitulo_invalido";
     exit;
 }
 
-// inserir página
+// inserir
 $sql = "INSERT INTO paginas (capitulo_id, usuario_id, titulo) VALUES (?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("iis", $capitulo_id, $usuario_id, $titulo);
 
-if ($stmt->execute()) {
-    echo "ok";
-} else {
-    echo "erro";
-}
+echo $stmt->execute() ? "ok" : "erro";

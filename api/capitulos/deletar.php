@@ -1,17 +1,15 @@
 <?php
-session_start();
-include("Config/Config.php");
+require_once("../../config/database.php");
+require_once("../../middlewares/auth.php");
 
-$id = $_POST['id'];
+$id = $_POST['id'] ?? null;
 $usuario_id = $_SESSION['id'];
 
-// apaga páginas primeiro
 $sql = "DELETE FROM paginas WHERE capitulo_id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $id, $usuario_id);
 $stmt->execute();
 
-// apaga capítulo
 $sql = "DELETE FROM capitulos WHERE id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $id, $usuario_id);

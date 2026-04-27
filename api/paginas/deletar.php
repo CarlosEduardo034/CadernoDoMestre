@@ -1,8 +1,8 @@
 <?php
-session_start();
-include("Config/Config.php");
+require_once("../../config/database.php");
+require_once("../../middlewares/auth.php");
 
-$id = $_POST['id'];
+$id = $_POST['id'] ?? null;
 $usuario_id = $_SESSION['id'];
 
 $sql = "DELETE FROM paginas WHERE id = ? AND usuario_id = ?";

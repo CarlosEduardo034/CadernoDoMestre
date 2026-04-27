@@ -1,11 +1,6 @@
 <?php
-session_start();
-include("Config/Config.php");
-
-if (!isset($_SESSION['id'])) {
-    echo "nao_autorizado";
-    exit;
-}
+require_once("../../config/database.php");
+require_once("../../middlewares/auth.php");
 
 $id = $_POST['id'] ?? null;
 $titulo = $_POST['titulo'] ?? null;
@@ -16,19 +11,18 @@ if (!$id || !$titulo) {
     exit;
 }
 
-// verifica se a página pertence ao usuário
+// valida dono
 $sql = "SELECT id FROM paginas WHERE id = ? AND usuario_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $id, $usuario_id);
 $stmt->execute();
-$result = $stmt->get_result();
 
-if ($result->num_rows == 0) {
+if ($stmt->get_result()->num_rows == 0) {
     echo "nao_permitido";
     exit;
 }
 
-// atualiza título
+// update
 $sql = "UPDATE paginas SET titulo = ? WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("si", $titulo, $id);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("Config/Config.php");
+include("config/database.php");
 
 if (!isset($_SESSION['id'])) {
     header("Location: login.html");
@@ -14,8 +14,8 @@ if (!isset($_SESSION['id'])) {
 <a href="Dashboard/Dashboard.php">Voltar</a>
 
 <script>
-function carregarLixeira() {
-    fetch("listar_lixeira.php")
+function carregarLixeira() {    
+    fetch("api/lixeira/listar.php")
     .then(res => res.json())
     .then(itens => {
         const lista = document.getElementById("listaLixeira");
@@ -52,8 +52,8 @@ function carregarLixeira() {
 
 function restaurar(id, tipo) {
     const url = tipo === "capitulo"
-        ? "restaurar_capitulo.php"
-        : "restaurar_pagina.php";
+        ? "api/capitulos/restaurar.php"
+        : "api/paginas/restaurar.php";
 
     fetch(url, {
         method: "POST",
@@ -73,8 +73,8 @@ function excluirDefinitivo(id, tipo) {
     if (!confirm("Excluir permanentemente?")) return;
 
     const url = tipo === "capitulo"
-        ? "delete_definitivo.php"
-        : "delete_pagina_definitivo.php";
+        ? "api/capitulos/deletar.php"
+        : "api/paginas/deletar.php";
 
     fetch(url, {
         method: "POST",

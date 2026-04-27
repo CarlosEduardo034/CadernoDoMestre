@@ -33,7 +33,7 @@ if (!isset($_SESSION['id'])) {
             const nome = document.getElementById("nome").value;
             const descricao = document.getElementById("descricao").value;
 
-            fetch("../criar_capitulo.php", {
+            fetch("../api/capitulos/criar.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -51,7 +51,7 @@ if (!isset($_SESSION['id'])) {
         }
 
         function carregarCapitulos() {
-            fetch("../listar_capitulos.php")
+            fetch("../api/capitulos/listar.php")
             .then(res => res.json())
             .then(capitulos => {
                 const lista = document.getElementById("listaCapitulos");
@@ -98,7 +98,7 @@ if (!isset($_SESSION['id'])) {
             const nome = document.getElementById(`nome-${id}`).value;
             const descricao = document.getElementById(`desc-${id}`).value;
  
-            fetch("../editar_capitulo.php", {
+            fetch("../api/capitulos/editar.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
@@ -120,7 +120,7 @@ if (!isset($_SESSION['id'])) {
 
             if (!confirmar) return;
 
-            fetch("../excluir_capitulo.php", {
+            fetch("../api/capitulos/excluir.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
